@@ -58,7 +58,11 @@ export const mainSlice = createSlice({
         page: 1,
         homeItemsLoading: false,
 
-        categoryData: [] as any
+        categoryData: [] as any,
+
+        userType: '',
+        isUserBanned: false,
+        isUseronCooldown: false,
 
 
     },
@@ -73,8 +77,18 @@ export const mainSlice = createSlice({
             state.isLoggedIn = action.payload;
         },
 
+        setUserType: (state, action) => {
+            state.userType = action.payload;
+        },
+
         setUserName: (state, action) => {
             state.userName = action.payload;
+        },
+        setUserOnCooldown: (state, action) => {
+            state.isUseronCooldown = action.payload;
+        },
+        setUserBanned: (state, action) => {
+            state.isUserBanned = action.payload;
         },
         addItem: (state, action) => {
             state.items.push(...action.payload);
@@ -115,5 +129,8 @@ export const mainSlice = createSlice({
     }
 });
 
-export const { getNotifications, setCategoryData, setHomeItemsLoading, setPage, addItem, setHasMore, setUserName, setIsLoggedIn, setWarning } = mainSlice.actions;
+export const { getNotifications,
+    setUserBanned,
+    setUserOnCooldown,
+    setUserType, setCategoryData, setHomeItemsLoading, setPage, addItem, setHasMore, setUserName, setIsLoggedIn, setWarning } = mainSlice.actions;
 export default mainSlice.reducer;

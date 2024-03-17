@@ -7,6 +7,7 @@ import { CardCompAudio, CardCompImage, CardCompText } from "../../components/Hom
 import { apiRoute } from '../../utils/apiRoute.ts';
 import { IUserProfileData, IUserProfilePosts } from '../Profile/Profile.tsx';
 import moment from 'moment';
+import toast from 'react-hot-toast';
 function UserPage() {
     const navigate = useNavigate();
     let { id } = useParams()
@@ -15,8 +16,10 @@ function UserPage() {
         code: 0,
         data: {
             joinedDate: 'Loading...',
+            isUserBanned: false,
             recentlyActive: '',
             totalPostCount: '',
+            isUserCoolDown: false,
             userName: ''
         },
         msg: ''
@@ -55,6 +58,27 @@ function UserPage() {
         setLoading(false)
     }
 
+
+    async function giveCooldown(type: 'ban' | 'cooldown') {
+        let x = confirm(`Are you sure you want to ${type} this user?`)
+        if (!x) return
+        let a = await fetch(apiRoute + `/posts/coolDown/rsvgsng?action=${type}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        let b = await a.json()
+        if (b.error) {
+            return toast.error(b.message)
+        }
+        toast.success(b.message)
+    }
+
+
+
+
     React.useEffect(() => {
         fetchProfilePageData().then(() => {
             fetchUserPosts()
@@ -67,8 +91,8 @@ function UserPage() {
                 <div className={style.back__btn} onClick={() => navigate(-1)}>
                     <IoMdArrowRoundBack />
                 </div>
-            </div>
 
+            </div>
 
             <div className={style.profile}>
                 <div className={style.image__wrapper}>
@@ -78,8 +102,20 @@ function UserPage() {
                 </div>
                 <p className={style.profile__name}>
                     {userProfileData.data.userName}
-
+                    <br />
+                    <br />
+                    <button
+                        onClick={() => giveCooldown('ban')}
+                    >{userProfileData.data.isUserBanned ? 'unban' : 'ban'} User?</button> <br /><br />
+                    <button
+                        onClick={() => giveCooldown('cooldown')}
+                    >Cooldown User?</button>
                 </p>
+                {
+                    userProfileData.data.isUserBanned ?
+                        <p className={style.cool__down__msg}>The user is permanently banned! </p> :
+                        userProfileData?.data?.isUserCoolDown ? <p className={style.cool__down__msg}>This user received cool down for {Math.floor(userProfileData?.data?.isUserCoolDown / 60000)} minutes</p> : null
+                }
 
             </div>
             <div className={style.grid}>

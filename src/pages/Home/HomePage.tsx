@@ -25,6 +25,7 @@ export interface IPostType {
     audioUrl: any
     category: string
     postID: string
+    isNSFW: boolean
     reactionCount: number
     audioLength: string
     content: string
@@ -42,7 +43,8 @@ function HomePage() {
     let hasMore = useSelector((e: RootState) => e.factory.hasMore);
     let page = useSelector((e: RootState) => e.factory.page);
     let loading = useSelector((e: RootState) => e.factory.homeItemsLoading);
-
+    let isUserBanned = useSelector((e: RootState) => e.factory.isUserBanned);
+    let isCooldown = useSelector((e: RootState) => e.factory.isUseronCooldown);
     async function fetchData() {
         if (hasMore === false) return
         if (page > 1) {
@@ -68,6 +70,7 @@ function HomePage() {
     }
 
 
+
     React.useEffect(() => {
         fetchData()
     }, [])
@@ -76,38 +79,39 @@ function HomePage() {
         <React.Fragment>
             {
                 isLoggedIn ?
-                    <Fab
-                        mainButtonStyles={{ backgroundColor: "#f50057" }}
-                        icon={<IoIosCreate />}
-                        event="click"
-                    >
-                        <Action
-                            text="Create Text Post"
-                            onClick={() => {
+                    isUserBanned || isCooldown ? null :
+                        <Fab
+                            mainButtonStyles={{ backgroundColor: "#f50057" }}
+                            icon={<IoIosCreate />}
+                            event="click"
+                        >
+                            <Action
+                                text="Create Text Post"
+                                onClick={() => {
 
-                                navigate("/cp/text")
-                            }}
-                        >
-                            <MdOutlineTextFields />
-                        </Action>
-                        <Action
-                            text="Create Image Post"
-                            onClick={() => {
-                                navigate("/cp/image")
-                            }}
-                        >
-                            <FaImages />
-                        </Action>
+                                    navigate("/cp/text")
+                                }}
+                            >
+                                <MdOutlineTextFields />
+                            </Action>
+                            <Action
+                                text="Create Image Post"
+                                onClick={() => {
+                                    navigate("/cp/image")
+                                }}
+                            >
+                                <FaImages />
+                            </Action>
 
-                        <Action
-                            text="Create Audio Post"
-                            onClick={() => {
-                                navigate("/cp/audio")
-                            }}
-                        >
-                            <AiTwotoneAudio />
-                        </Action>
-                    </Fab> : null
+                            <Action
+                                text="Create Audio Post"
+                                onClick={() => {
+                                    navigate("/cp/audio")
+                                }}
+                            >
+                                <AiTwotoneAudio />
+                            </Action>
+                        </Fab> : null
             }
 
             <div className={style.home__wrapper}>

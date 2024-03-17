@@ -18,7 +18,9 @@ export interface IUserProfileData {
     data: {
         joinedDate: string,
         recentlyActive: string,
+        isUserBanned: boolean,
         totalPostCount: string,
+        isUserCoolDown: boolean,
         userName: string
     },
     msg: string,
@@ -57,6 +59,8 @@ function Profile() {
             joinedDate: 'Loading...',
             recentlyActive: '',
             totalPostCount: '',
+            isUserCoolDown: false,
+            isUserBanned: false,
             userName: ''
         },
         msg: ''

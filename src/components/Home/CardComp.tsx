@@ -25,7 +25,6 @@ function CardCompText({ post }: { post: IPostType }) {
                         navigate('/c/' + post.postID) : dispatch(setWarning(true))
 
                 }}
-
                 className={style.card__comp__text}>
                 <div className={style.upper__meta}>
                     <div className={style.left__item}>
@@ -48,7 +47,23 @@ function CardCompText({ post }: { post: IPostType }) {
 
                     </div>
                 </div>
-                <div className={style.main__content}>
+
+                <div className={style.main__content} style={{
+                    padding: post.isNSFW ? '12px' : '0px',
+                    borderRadius: post.isNSFW ? '10px' : '0px'
+                }}>
+                    {
+                        post.isNSFW ?
+                            <div className={style.nsfw__wrapper}>
+                                <span>
+                                    This post contains NSFW content
+                                </span>
+                                <br />
+
+                            </div> : null
+                    }
+
+
                     <div className={style.title__content}>
                         <h4>
                             {post.title}
@@ -60,6 +75,8 @@ function CardCompText({ post }: { post: IPostType }) {
                         </p>
                     </div>
                 </div>
+
+
                 <div className={style.bottom__meta}>
                     <div className={style.left__bottom}>
                         <FaHeart />
@@ -91,7 +108,7 @@ function CardCompAudio({ post }: { post: IPostType }) {
 
             }}
             className={style.card__comp__text} style={{
-                background: "#0a364b"
+                background: post.isNSFW ? 'unset' : "#0a364b"
             }}>
 
             <div className={style.upper__meta}>
@@ -116,7 +133,22 @@ function CardCompAudio({ post }: { post: IPostType }) {
 
                 </div>
             </div>
-            <div className={style.main__content}>
+            <div className={style.main__content}
+                style={{
+                    padding: post.isNSFW ? '12px' : '0px',
+                    borderRadius: post.isNSFW ? '10px' : '0px'
+                }}
+            >
+                {
+                    post.isNSFW ?
+                        <div className={style.nsfw__wrapper}>
+                            <span>
+                                This post contains NSFW content
+                            </span>
+                            <br />
+
+                        </div> : null
+                }
                 <div className={style.title__content}>
                     <h4>
                         {post.title}
@@ -191,7 +223,22 @@ function CardCompImage({ post }: { post: IPostType }) {
 
                     </div>
                 </div>
-                <div className={style.main__content}>
+                <div className={style.main__content}
+                    style={{
+                        padding: post.isNSFW ? '12px' : '0px',
+                        borderRadius: post.isNSFW ? '10px' : '0px'
+                    }}
+                >
+                    {
+                        post.isNSFW ?
+                            <div className={style.nsfw__wrapper}>
+                                <span>
+                                    This post contains NSFW content
+                                </span>
+                                <br />
+
+                            </div> : null
+                    }
 
                     <div className={style.title__content}>
                         <h4>

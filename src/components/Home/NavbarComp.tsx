@@ -15,33 +15,36 @@ function NavbarComp() {
     let notiCount = notification?.data?.filter((e: any) => e.isSeen == false).length
 
     return (
-        <div className={style.nav__main}>
-            <div className={style.left__}>
-                <h5 style={{ fontWeight: 700 }}>CONFESS24 <small style={{ fontWeight: 400, fontSize: '12px', fontStyle: 'italic' }}>Alpha</small></h5>
-            </div>
-            <div className={style.right__}>
-                {
-                    isLogged ?
-                        <React.Fragment>
-                            <div className={style.noti__btn} onClick={() => navigate('/notifications')}>
-                                {
-                                    notiCount > 0 ? <div className={style.badge__noti}>{notiCount}</div> : null
-                                }
+        <React.Fragment>
 
-                                <MdNotifications />
+            <div className={style.nav__main}>
+                <div className={style.left__}>
+                    <h5 style={{ fontWeight: 700 }}>CONFESS24 <small style={{ fontWeight: 400, fontSize: '12px', fontStyle: 'italic' }}>Alpha</small></h5>
+                </div>
+                <div className={style.right__}>
+                    {
+                        isLogged ?
+                            <React.Fragment>
+                                <div className={style.noti__btn} onClick={() => navigate('/notifications')}>
+                                    {
+                                        notiCount > 0 ? <div className={style.badge__noti}>{notiCount}</div> : null
+                                    }
+
+                                    <MdNotifications />
+                                </div>
+                                <div className={style.noti__btn} onClick={() => navigate('/profile')}>
+                                    <FaCircleUser />
+                                </div>
+                            </React.Fragment>
+                            :
+                            <div className={style.login__btn} onClick={() => navigate('/auth/signup')}>
+                                <span>Signup</span>
+                                <RiLoginCircleFill />
                             </div>
-                            <div className={style.noti__btn} onClick={() => navigate('/profile')}>
-                                <FaCircleUser />
-                            </div>
-                        </React.Fragment>
-                        :
-                        <div className={style.login__btn} onClick={() => navigate('/auth/signup')}>
-                            <span>Signup</span>
-                            <RiLoginCircleFill />
-                        </div>
-                }
+                    }
+                </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

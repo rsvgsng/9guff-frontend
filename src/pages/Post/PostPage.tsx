@@ -83,8 +83,10 @@ interface IPost {
     audioUrl: any
     category: string
     postID: string
+    isNSFW: boolean
     content: string
     user: string
+    isVisible: boolean
     views: number
     createdAt: string
     reactionCount: number
@@ -174,12 +176,16 @@ function PostPage() {
     const [post, setPost] = useState<IPostType>();
     const [reactions, setReactions] = useState<IReactionType>();
     const [comments, setComments] = useState<ICommentType>();
-
     const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useDispatch<any>()
     const isLoggedIn = useSelector((e: RootState) => e?.factory?.isLoggedIn)
+    let isUserBanned = useSelector((e: RootState) => e?.factory?.isUserBanned)
+    let isCooldown = useSelector((e: RootState) => e.factory?.isUseronCooldown);
+    let userType = useSelector((e: RootState) => e.factory?.userType)
 
     const [commntpostingLoading, setCommentPostingLoading] = useState<boolean>(false)
+
+    const [isNSFW, setIsNSFW] = useState<boolean>(false)
 
     async function getPost() {
         let p = await fetchRetry(apiRoute + `/posts/singlePost/${id}?type=post`, {
@@ -214,7 +220,6 @@ function PostPage() {
         }
         setReactions(data)
     }
-
     async function getComments() {
         let p = await fetchRetry(apiRoute + `/posts/singlePost/${id}?type=comments`, {
             method: 'GET',
@@ -247,7 +252,7 @@ function PostPage() {
             })
             let data: any = await p.json()
             if (data.error) {
-                return toast.error("An error occured")
+                return toast.error(data.message)
             }
             clearText()
             setTrackHeight('50px')
@@ -283,7 +288,7 @@ function PostPage() {
             })
             let data: any = await p.json()
             if (data.error) {
-                return toast.error("An error occured")
+                return toast.error(data.message)
             }
             clearText()
             setComment({
@@ -333,6 +338,46 @@ function PostPage() {
         }
         getReactions()
     }
+
+
+
+    async function hidePost(type: 'hide' | 'delete') {
+        let x = confirm(`Are you sure you want to ${type} this post?`)
+        if (!x) return
+        let a = await fetch(apiRoute + `/posts/deletePost/${id}?action=${type}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        let b = await a.json()
+        if (b.error) {
+            return toast.error(b.message)
+        }
+        toast.success(b.message)
+    }
+
+    async function giveCooldown(type: 'ban' | 'cooldown') {
+        let x = confirm(`Are you sure you want to ${type} this user?`)
+        if (!x) return
+        let a = await fetch(apiRoute + `/posts/coolDown/rsvgsng?action=${type}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        let b = await a.json()
+        if (b.error) {
+            return toast.error(b.message)
+        }
+        toast.success(b.message)
+    }
+
+
+
+
     return (
         <React.Fragment>
             <div className={style.nav__bar}>
@@ -351,6 +396,34 @@ function PostPage() {
                     <span>Share</span>
                 </div>
             </div>
+
+            {
+                userType === 'Admin' ?
+                    <React.Fragment>
+                        <div className={style.admin__tools}>
+                            <div className={style.admin__tool__item} onClick={() => hidePost('hide')}>
+                                <span>Hide Post ({post?.data.isVisible ? "Not hidden" : "hidden"})</span>
+                            </div>
+                            <div className={style.admin__tool__item} onClick={() => hidePost('delete')}>
+                                <span>Delete Post</span>
+                            </div>
+                            <div className={style.admin__tool__item} onClick={() => giveCooldown('cooldown')}>
+                                <span>Give Cooldown (1 hr)</span>
+                            </div>
+                            <div className={style.admin__tool__item} onClick={() => giveCooldown('ban')}>
+                                <span>Ban User</span>
+                            </div>
+
+                        </div>
+
+
+                    </React.Fragment>
+
+                    : null
+            }
+
+
+
 
             <div className={style.main__content__wrapper}>
 
@@ -385,6 +458,17 @@ function PostPage() {
                                 </div>
                             </div>
                             <div className={style.main__content}>
+                                {
+                                    !isNSFW ?
+                                        post?.data.isNSFW ?
+                                            <div className={style.nsfw__wrapper} onClick={() => setIsNSFW(true)}>
+                                                <span>
+                                                    This post contains NSFW content.<br />Click to anywhere view at your own risk.
+                                                </span>
+                                                <br />
+                                            </div> : null : null
+                                }
+
                                 <div className={style.title__content}>
                                     <h4>
                                         {post?.data.title}
@@ -439,23 +523,26 @@ function PostPage() {
 
 
                 {/* Reactions */}
+                {
+                    isUserBanned || isCooldown ? null :
+                        <div className={style.reation__container}>
+                            {
 
-                <div className={style.reation__container}>
-                    {
+                                categories.map((_, i) => {
+                                    return (
+                                        <div className={style.reaction__item} onClick={() => handleLike(_.type)} key={i} >
+                                            <_.emoji color={_.color} />
+                                            <span>
+                                                {reactions?.data.reactions[_.type]}
+                                            </span>
+                                        </div>
+                                    )
+                                })
 
-                        categories.map((_, i) => {
-                            return (
-                                <div className={style.reaction__item} onClick={() => handleLike(_.type)} key={i} >
-                                    <_.emoji color={_.color} />
-                                    <span>
-                                        {reactions?.data.reactions[_.type]}
-                                    </span>
-                                </div>
-                            )
-                        })
+                            }
+                        </div>
 
-                    }
-                </div>
+                }
 
                 {/* Comments */}
                 <div
@@ -540,26 +627,30 @@ function PostPage() {
                                                     }
                                                 </div>
                                             </div>
-                                            <div className={style.reply__time}>
-                                                <span
-                                                    onClick={() => {
-                                                        setTrackHeight('200px')
-                                                        setComment({
-                                                            ...comment,
-                                                            isReply: true,
-                                                            replyId: e._id
-                                                        })
-                                                        setReply({
-                                                            isActive: true,
-                                                            replyTo: e.user,
-                                                            showReply: true
-                                                        });
-                                                    }}
-                                                    style={{
-                                                        marginRight: '10px',
-                                                        fontWeight: 'bold'
-                                                    }}>Reply</span>
-                                            </div>
+                                            {
+                                                isUserBanned || isCooldown ? null :
+                                                    <div className={style.reply__time}>
+                                                        <span
+                                                            onClick={() => {
+                                                                setTrackHeight('200px')
+                                                                setComment({
+                                                                    ...comment,
+                                                                    isReply: true,
+                                                                    replyId: e._id
+                                                                })
+                                                                setReply({
+                                                                    isActive: true,
+                                                                    replyTo: e.user,
+                                                                    showReply: true
+                                                                });
+                                                            }}
+                                                            style={{
+                                                                marginRight: '10px',
+                                                                fontWeight: 'bold'
+                                                            }}>Reply</span>
+                                                    </div>
+                                            }
+
 
 
                                         </div>
@@ -575,96 +666,99 @@ function PostPage() {
 
             </div>
 
+            {
+                isUserBanned || isCooldown ? null :
+                    <div
+                        className={`${style.add__comment__section} container`} style={{
+                            height: trackHeight
+                        }}>
+                        {
+                            reply.isActive && (
+                                <div className={style.reply__place__holder}>
+                                    <span>Reply to : <span style={{ fontWeight: 800, margin: 0, paddingLeft: 1, color: '#00c7ff' }}>
+                                        {reply.replyTo}
+                                    </span></span>
+                                    <IoMdCloseCircle onClick={() => {
+                                        setComment({
+                                            ...comment,
+                                            isReply: false
 
-            <div
-                className={`${style.add__comment__section} container`} style={{
-                    height: trackHeight
-                }}>
-                {
-                    reply.isActive && (
-                        <div className={style.reply__place__holder}>
-                            <span>Reply to : <span style={{ fontWeight: 800, margin: 0, paddingLeft: 1, color: '#00c7ff' }}>
-                                {reply.replyTo}
-                            </span></span>
-                            <IoMdCloseCircle onClick={() => {
+                                        })
+                                        setReply({
+                                            isActive: false,
+                                            replyTo: '',
+                                            showReply: false
+                                        })
+                                    }} />
+                                </div>
+                            )
+                        }
+
+                        {
+                            trackHeight === '200px' && !reply.isActive && (
+                                <div className={style.close__btn__main}>
+                                    <span>Add a comment</span>
+                                    <IoMdCloseCircle onClick={() => {
+                                        setTrackHeight('50px')
+                                    }} />
+                                </div>
+                            )
+                        }
+
+
+                        <textarea
+                            ref={textboxRef}
+                            placeholder={reply.isActive ? `Reply to ${reply.replyTo}` : 'Add a comment'}
+                            style={{
+                                width: '100%',
+                                transition: " 0.5s all ease-in-out",
+                                color: 'white',
+                                fontFamily: 'inherit',
+                                paddingLeft: '10px',
+                                border: 'none',
+                                paddingTop: trackHeight === '200px' ? "50px" : '10px',
+                                height: '100%',
+                                backdropFilter: 'blur(10px)',
+                                backgroundColor: 'rgb(0 ,0 ,0)',
+                            }}
+                            onClick={(e) => { setTrackHeight('200px'); }}
+                            onChange={(e) => {
                                 setComment({
                                     ...comment,
-                                    isReply: false
-
+                                    comment: e.target.value,
+                                    isReply: reply.isActive,
                                 })
-                                setReply({
-                                    isActive: false,
-                                    replyTo: '',
-                                    showReply: false
-                                })
-                            }} />
-                        </div>
-                    )
-                }
 
-                {
-                    trackHeight === '200px' && !reply.isActive && (
-                        <div className={style.close__btn__main}>
-                            <span>Add a comment</span>
-                            <IoMdCloseCircle onClick={() => {
-                                setTrackHeight('50px')
-                            }} />
-                        </div>
-                    )
-                }
+                            }}
+                            name="" id="" className={style.input__cmt}></textarea>
+                        {
+                            commntpostingLoading ? <PiSpinner
+                                className={style.spin}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    bottom: '12px',
+                                    fontSize: '1.5rem',
+                                    color: 'white'
+                                }}
 
-
-                <textarea
-                    ref={textboxRef}
-                    placeholder={reply.isActive ? `Reply to ${reply.replyTo}` : 'Add a comment'}
-                    style={{
-                        width: '100%',
-                        transition: " 0.5s all ease-in-out",
-                        color: 'white',
-                        fontFamily: 'inherit',
-                        paddingLeft: '10px',
-                        border: 'none',
-                        paddingTop: trackHeight === '200px' ? "50px" : '10px',
-                        height: '100%',
-                        backdropFilter: 'blur(10px)',
-                        backgroundColor: 'rgb(0 ,0 ,0)',
-                    }}
-                    onClick={(e) => { setTrackHeight('200px'); }}
-                    onChange={(e) => {
-                        setComment({
-                            ...comment,
-                            comment: e.target.value,
-                            isReply: reply.isActive,
-                        })
-
-                    }}
-                    name="" id="" className={style.input__cmt}></textarea>
-                {
-                    commntpostingLoading ? <PiSpinner
-                        className={style.spin}
-                        style={{
-                            position: 'absolute',
-                            right: '10px',
-                            bottom: '12px',
-                            fontSize: '1.5rem',
-                            color: 'white'
-                        }}
-
-                    /> : <IoSend
-                        onClick={() => {
-                            handleComment()
-                        }}
-                        style={{
-                            position: 'absolute',
-                            right: '10px',
-                            bottom: '12px',
-                            fontSize: '1.5rem',
-                            color: 'white'
-                        }} />
-                }
+                            /> : <IoSend
+                                onClick={() => {
+                                    handleComment()
+                                }}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    bottom: '12px',
+                                    fontSize: '1.5rem',
+                                    color: 'white'
+                                }} />
+                        }
 
 
-            </div>
+                    </div>
+
+            }
 
 
         </React.Fragment >
