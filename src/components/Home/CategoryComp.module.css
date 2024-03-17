@@ -1,0 +1,32 @@
+.cat__main {
+    margin-top: 30px;
+    display: flex;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+}
+
+.cat__main::-webkit-scrollbar {
+    display: none;
+}
+
+.cat__item {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.image__cat__item img {
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.text__cat__item h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}

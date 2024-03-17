@@ -1,0 +1,65 @@
+.nav__main {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right__ {
+    display: flex;
+    align-items: center;
+}
+
+.left__ h5 {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.noti__btn svg {
+    margin-top: 10px;
+    font-size: 30px;
+    margin-left: 15px;
+}
+
+.noti__btn {
+    position: relative;
+}
+
+.badge__noti {
+    position: absolute;
+    top: 0;
+    right: -4px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+
+}
+
+.login__btn {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid white;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    cursor: pointer;
+}
+
+.login__btn svg {
+    font-size: 30px;
+}
+
+.login__btn span {
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 5px;
+}

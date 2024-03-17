@@ -1,0 +1,143 @@
+.main__wrapper {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.nav__bar svg {
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.nav__bar {
+    display: flex;
+    align-items: center;
+}
+
+.nav__bar h3 {
+    font-weight: 500;
+}
+
+.body__main {
+    margin-top: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.title__input {
+    display: flex;
+    flex-direction: column;
+}
+
+.title__input input {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #d1d1d124;
+    border-radius: 5px;
+    font-size: 16px;
+
+}
+
+.content__input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.content__input textarea {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #d1d1d124;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+
+}
+
+.content__input textarea:focus,
+.title__input input:focus {
+    border: 1px solid #0ba373;
+}
+
+.content__input span,
+.title__input span {
+    font-size: 12px;
+    text-align: end;
+    margin-top: 5px;
+}
+
+.category__input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.category__input select {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #d1d1d124;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.post__btn {
+    margin-top: 40px;
+}
+
+.post__btn button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0ba373;
+    color: white;
+    font-weight: 600;
+
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+.audio__section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.audio__section label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.audio__post__record audio {
+    width: 100%;
+    /* height: 100%; */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.audio__post__record {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.audio__recorder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.audio__recorder svg {
+    font-size: 50px;
+    margin-right: 10px;
+    color: white;
+}
+
+.lable__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

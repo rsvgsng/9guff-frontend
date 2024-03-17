@@ -1,0 +1,39 @@
+.noti__card__main {
+    border-radius: 10px;
+    background-color: rgba(66, 68, 70, 0.52);
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.top__content {
+    display: flex;
+}
+
+.noti__meta {
+    display: flex;
+    place-content: flex-end;
+}
+
+.noti__meta span {
+    color: rgb(221, 216, 216);
+    font-size: 12px;
+
+}
+
+.avatar__main {
+    min-width: 55px;
+    height: 55px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.right__main__content {
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.right__main__content span {
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+}

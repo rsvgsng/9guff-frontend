@@ -1,0 +1,60 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242526;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.rtf {
+  right: 0 !important;
+}
+
+.rhap_container {
+  box-shadow: none !important;
+}
+
+.rtf--ab__c>span {
+  opacity: 100 !important;
+}
+
+.recording {
+  width: 100%;
+}
+
+.rhap_main-controls-button {
+  color: #fff;
+}
+
+.audio-recorder {
+  margin-top: 10px;
+  width: 100% !important;
+  box-shadow: none !important;
+  border-radius: 5px !important;
+}
+
+.rhap_progress-filled {
+  background-color: #0ba373;
+}
+
+.rhap_container {
+  background-color: transparent;
+}
+
+.rhap_time {
+  color: #fff;
+}
+
+.rhap_container svg {
+  /* display: none; */
+  color: white;
+}

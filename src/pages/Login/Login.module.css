@@ -1,0 +1,73 @@
+.section__ {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.top__section {
+    margin-top: 20%;
+    margin-bottom: 5%;
+}
+
+.top__section h2 {
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.welcome__text {
+    margin-top: 5%;
+}
+
+.welcome__text__single {
+    color: white;
+    font-size: 35px;
+    font-weight: 800
+}
+
+
+.login__dex {
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.bottom__section {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom__section label {
+    font-size: 15px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.action__btn {
+    margin-top: 20px;
+}
+
+.action__btn button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 7px;
+    transition: 0.3s ease-in-out;
+    color: white;
+    font-size: 20px;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.bottom__section input {
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    font-weight: 600;
+    border-radius: 7px;
+    color: black;
+    margin-top: 10px;
+}
+
+.account__actioncl p {
+    text-align: center;
+    font-size: 13px;
+}

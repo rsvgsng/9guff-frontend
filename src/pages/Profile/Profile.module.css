@@ -1,0 +1,154 @@
+.nav__bar {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 0;
+    position: sticky;
+    background: #242526;
+    place-content: space-between;
+    align-items: center;
+    z-index: 999;
+
+}
+
+.logout__btn svg {
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.image__wrapper {
+    position: relative;
+}
+
+.uploading__indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    height: 100%;
+    background-color: rgba(5, 1, 1, 0.836);
+}
+
+.uploading__indicator svg {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: #ffffff;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.edit__btn__upload {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.edit__btn__upload svg {
+    background: #ffffff;
+    border-radius: 50%;
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    border: 1px solid white;
+
+}
+
+.back__btn {
+    margin-left: 5px;
+}
+
+.back__btn svg {
+    font-size: 30px;
+}
+
+
+
+.edit__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit__btn span {
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.edit__btn svg {
+    font-size: 20px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    justify-content: center;
+    background: #242526;
+}
+
+.profile__img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile__name {
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.body {
+    padding: 10px;
+}
+
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.user__details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 5px;
+    text-transform: uppercase;
+}
+
+
+
+.user__posts {
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+.user__details__title {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.user__details__desc {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+}
