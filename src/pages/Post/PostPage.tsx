@@ -341,7 +341,8 @@ function PostPage() {
 
 
 
-    async function hidePost(type: 'hide' | 'delete') {
+    async function hidePost(type: 'hide' | 'delete' | 'isnsfw') {
+
         let x = confirm(`Are you sure you want to ${type} this post?`)
         if (!x) return
         let a = await fetch(apiRoute + `/posts/deletePost/${id}?action=${type}`, {
@@ -355,13 +356,13 @@ function PostPage() {
         if (b.error) {
             return toast.error(b.message)
         }
-        toast.success(b.message)
+        toast.success(b.msg)
     }
 
     async function giveCooldown(type: 'ban' | 'cooldown') {
         let x = confirm(`Are you sure you want to ${type} this user?`)
         if (!x) return
-        let a = await fetch(apiRoute + `/posts/coolDown/rsvgsng?action=${type}`, {
+        let a = await fetch(apiRoute + `/posts/coolDown/${post?.data.user}?action=${type}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -372,7 +373,7 @@ function PostPage() {
         if (b.error) {
             return toast.error(b.message)
         }
-        toast.success(b.message)
+        toast.success(b.msg)
     }
 
 
@@ -403,6 +404,9 @@ function PostPage() {
                         <div className={style.admin__tools}>
                             <div className={style.admin__tool__item} onClick={() => hidePost('hide')}>
                                 <span>Hide Post ({post?.data.isVisible ? "Not hidden" : "hidden"})</span>
+                            </div>
+                            <div className={style.admin__tool__item} onClick={() => hidePost('isnsfw')}>
+                                <span>Censor Post ({post?.data.isNSFW ? "Chada Post" : "NORMAL POST"})</span>
                             </div>
                             <div className={style.admin__tool__item} onClick={() => hidePost('delete')}>
                                 <span>Delete Post</span>
