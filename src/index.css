@@ -58,3 +58,41 @@
   /* display: none; */
   color: white;
 }
+
+.notice___terms {
+  color: #fff;
+  font-size: 13px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.main__terms {
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+
+  line-height: 1.6;
+}
+
+.main__terms h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.main__terms h2 {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.main__terms p {
+  margin-bottom: 15px;
+  color: #ffffffdd;
+}
+
+.main__terms ol {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}

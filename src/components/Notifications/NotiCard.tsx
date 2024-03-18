@@ -53,7 +53,9 @@ function NotiCommentCard({ noti }: { noti: NotiCardProps }): React.JSX.Element {
                     markAsRead(noti._id, noti.isSeen)
                 }}>
                 <div className={style.top__content}>
-                    <div className={style.avatar__main}></div>
+                    <div className={style.avatar__main}>
+                        <img src={apiRoute + "/storage/dp/" + noti.message.split(" ")[0]} alt="" />
+                    </div>
                     <div className={style.right__main__content}>
                         <span>
                             {noti.message}

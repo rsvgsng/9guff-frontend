@@ -25,7 +25,8 @@
     "react-loading-skeleton": "^3.4.0",
     "react-redux": "^9.1.0",
     "react-tiny-fab": "^4.0.4",
-    "vite-plugin-class-mangler": "^0.0.1-patch"
+    "vite-plugin-class-mangler": "^0.0.1-patch",
+    "vite-plugin-pwa": "^0.19.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

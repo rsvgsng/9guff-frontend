@@ -19,7 +19,7 @@ function NavbarComp() {
 
             <div className={style.nav__main}>
                 <div className={style.left__}>
-                    <h5 style={{ fontWeight: 700 }}>CONFESS24 <small style={{ fontWeight: 400, fontSize: '12px', fontStyle: 'italic' }}>Alpha</small></h5>
+                    <h5 style={{ fontWeight: 700 }}>CONFESS24 <small style={{ fontWeight: 400, fontSize: '12px', fontStyle: 'italic' }}>Beta</small></h5>
                 </div>
                 <div className={style.right__}>
                     {

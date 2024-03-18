@@ -10,10 +10,10 @@ function Signup() {
     const [username, setUsername] = useState('')
     const [pincode, setPincode] = useState('')
     const [clientToken, setClientToken] = useState('')
-    const [loading,setLoading] =useState(false)
+    const [loading, setLoading] = useState(false)
     async function handleVerificationSuccess() {
 
-        if(loading) return
+        if (loading) return
         if (!username || !pincode) return toast.error('Please fill all fields')
         if (!clientToken) return toast.error('Please verify you are not a robot')
         let htoken = clientToken
@@ -30,7 +30,7 @@ function Signup() {
             })
         })
         let res = await a.json()
-        if (res.error){
+        if (res.error) {
             setLoading(false)
             return toast.error(res.message)
         }
@@ -71,14 +71,18 @@ function Signup() {
                     <div className={style.action__btn}>
                         <button
                             style={{
-                                backgroundColor:loading?'#0e926a47':'#0e926a'
+                                backgroundColor: loading ? '#0e926a47' : '#0e926a'
                             }}
 
-                            onClick={handleVerificationSuccess}>{loading?'Processing...':'Signup'}</button>
+                            onClick={handleVerificationSuccess}>{loading ? 'Processing...' : 'Signup'}</button>
                     </div>
                 </div>
                 <div className={style.account__actioncl} onClick={() => navigate('/auth/login')}>
-                    <p>Already have an account ? <span >Login</span></p>
+                    <p>Already have an account ? <span style={{ color: '#d0acf0', textDecoration: 'underline' }} >Login</span></p>
+                    <br />
+                    <br />
+                    <p>By signing up you will be  agreeing to our <a href='/terms'>Terms and Conditions</a>
+                    </p>
                 </div>
             </div>
         </React.Fragment>

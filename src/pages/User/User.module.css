@@ -5,8 +5,6 @@
     padding-bottom: 10px;
     top: 0;
     position: sticky;
-
-    background: #242526;
     z-index: 999;
 
 }
@@ -17,11 +15,19 @@
 
 
 .back__btn {
-    margin-left: 5px;
+    margin-left: 15px;
+    margin-top: 7px;
+    border: 1px solid white;
+    background: black;
+    border-radius: 22px;
+    padding-left: 3px;
+    padding-right: 2px;
+    padding-top: 2px;
 }
 
 .back__btn svg {
     font-size: 30px;
+    color: white;
 }
 
 
@@ -47,6 +53,7 @@
     align-items: center;
     margin-bottom: 25px;
     justify-content: center;
+    padding-top: 65px;
     background: #242526;
 }
 
@@ -60,20 +67,21 @@
 }
 
 .profile__img {
-    width: 120px;
-    height: 120px;
+    width: 135px;
+    height: 135px;
     border-radius: 50%;
     object-fit: cover;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0 0 0 3px #ffffffd1;
 }
 
 .profile__name {
     font-weight: 600;
+    text-align: center;
     margin-top: 10px;
 }
 
-.body {
-    padding: 10px;
-}
 
 
 .grid {
@@ -105,5 +113,39 @@
 
 .user__posts {
     margin-top: 40px;
+    padding: 10px;
     margin-bottom: 80px;
+}
+
+
+.top__section__ {
+    position: relative;
+}
+
+.cover__pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.cover__pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bio__section {
+    padding: 10px;
+
+}
+
+.bio__section p {
+    font-size: 13px;
+    text-align: center;
+    margin-top: 10px;
+    color: #fff;
 }

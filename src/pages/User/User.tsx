@@ -22,7 +22,9 @@ function UserPage() {
             joinedDate: 'Loading...',
             isUserBanned: false,
             recentlyActive: '',
+            bio: '',
             totalPostCount: '',
+            coverPic: '',
             isUserCoolDown: false,
             userName: ''
         },
@@ -108,50 +110,65 @@ function UserPage() {
 
     return (
         <div className={style.body}>
-            <div className={style.nav__bar}>
-                <div className={style.back__btn} onClick={() => navigate(-1)}>
-                    <IoMdArrowRoundBack />
+
+            <div className={style.top__section__}>
+                <div className={style.cover__pic}>
+                    <img src={apiRoute + "/storage/cp/" + userProfileData.data.coverPic} alt="" />
                 </div>
 
-            </div>
+                <div className={style.nav__bar}>
+                    <div className={style.back__btn} onClick={() => navigate(-1)}>
+                        <IoMdArrowRoundBack />
+                    </div>
 
-            <div className={style.profile}>
-                <div className={style.image__wrapper}>
-                    <img className={style.profile__img}
-                        src={apiRoute + `/storage/dp/` + `${userProfileData?.data?.userName}`}
-                        alt="" />
                 </div>
-                <p className={style.profile__name}>
-                    {userProfileData.data.userName}
 
+                <div className={style.profile}>
+                    <div className={style.image__wrapper}>
+                        <img className={style.profile__img}
+                            src={apiRoute + `/storage/dp/` + `${userProfileData?.data?.userName}`}
+                            alt="" />
+                    </div>
+                    <p className={style.profile__name}>
+                        {userProfileData.data.userName}
+
+                        {
+                            isUserAdmin === 'Admin' ?
+                                <React.Fragment>
+                                    <br />
+                                    <br />
+                                    <button
+                                        onClick={() => giveCooldown('ban')}
+                                    >{userProfileData.data.isUserBanned ? 'unban' : 'ban'} User?</button> <br /><br />
+                                    <button
+                                        onClick={() => giveCooldown('cooldown')}
+                                    >Cooldown User?</button>
+                                    <br />
+                                    <br />
+                                    <button
+                                        onClick={() => removeCooldown()}
+                                    >Remove Cooldown?</button>
+                                </React.Fragment> : null
+                        }
+
+
+
+                    </p>
                     {
-                        isUserAdmin === 'Admin' ?
-                            <React.Fragment>
-                                <br />
-                                <br />
-                                <button
-                                    onClick={() => giveCooldown('ban')}
-                                >{userProfileData.data.isUserBanned ? 'unban' : 'ban'} User?</button> <br /><br />
-                                <button
-                                    onClick={() => giveCooldown('cooldown')}
-                                >Cooldown User?</button>
-                                <br />
-                                <br />
-                                <button
-                                    onClick={() => removeCooldown()}
-                                >Remove Cooldown?</button>
-                            </React.Fragment> : null
+                        userProfileData.data.bio ?
+                            <p className={style.bio__section}>
+                                {userProfileData.data.bio}
+                            </p> : null
                     }
 
+                    {
 
+                        userProfileData.data.isUserBanned ?
+                            <p className={style.cool__down__msg}>The user is permanently banned! </p> :
+                            userProfileData?.data?.isUserCoolDown ? <p className={style.cool__down__msg}>This user received cool down for {Math.floor(userProfileData?.data?.isUserCoolDown / 60000)} minutes</p> : null
+                    }
 
-                </p>
-                {
-
-                    userProfileData.data.isUserBanned ?
-                        <p className={style.cool__down__msg}>The user is permanently banned! </p> :
-                        userProfileData?.data?.isUserCoolDown ? <p className={style.cool__down__msg}>This user received cool down for {Math.floor(userProfileData?.data?.isUserCoolDown / 60000)} minutes</p> : null
-                }
+                </div>
 
             </div>
             <div className={style.grid}>
