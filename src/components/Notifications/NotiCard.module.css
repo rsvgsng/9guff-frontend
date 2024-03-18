@@ -21,7 +21,7 @@
 }
 
 .avatar__main {
-    min-width: 55px;
+    max-width: 55px;
     height: 55px;
     background-color: white;
     border-radius: 50%;
@@ -30,6 +30,7 @@
 .avatar__main img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     border-radius: 50%;
 
 }
