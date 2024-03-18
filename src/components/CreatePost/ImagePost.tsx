@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './ImagePost.module.css'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +17,7 @@ function ImagePost() {
     const [content, setContent] = React.useState<string>('')
     const [category, setCategory] = React.useState<string>('')
     const [loading, setLoading] = useState(false)
-    const [characters, setCharacters] = useState({title:0, content: 0})
+    const [characters, setCharacters] = useState({ title: 0, content: 0 })
 
     async function handleUpload(e: any) {
         let imageReader = new FileReader()
@@ -59,8 +59,8 @@ function ImagePost() {
             toast.error('Content should be less than 5000 characters')
             return
         }
-        if (content.length < 10) {
-            toast.error('Content should be more than 10 characters')
+        if (content.length < 5) {
+            toast.error('Content should be more than 5 characters')
             return
         }
         if (!category) {
@@ -103,11 +103,11 @@ function ImagePost() {
                     <label htmlFor="">Title*</label>
                     <input
                         onChange={(e) => {
-                            setCharacters({...characters, title: e.target.value.length})
+                            setCharacters({ ...characters, title: e.target.value.length })
                             setTitle(e.target.value)
                         }}
                         type="text" placeholder="Title" />
-                    <span>{100-characters.title} characters remaining</span>
+                    <span>{100 - characters.title} characters remaining</span>
                 </div>
 
                 <div className={style.image__input}>
@@ -141,7 +141,7 @@ function ImagePost() {
                     <label htmlFor="">Description*</label>
                     <textarea
                         onChange={(e) => {
-                            setCharacters({...characters, content: e.target.value.length})
+                            setCharacters({ ...characters, content: e.target.value.length })
                             setContent(e.target.value)
                         }}
                         placeholder="Content" rows={3} />

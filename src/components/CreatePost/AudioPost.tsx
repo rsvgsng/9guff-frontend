@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './AudioPost.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 import { apiRoute } from '../../utils/apiRoute'
 import { FFmpeg } from '@ffmpeg/ffmpeg'
 function AudioPost() {
-    const [characters, setCharacters] = useState({title:0, content: 0})
+    const [characters, setCharacters] = useState({ title: 0, content: 0 })
 
     const [loading, setLoading] = useState(false)
 
@@ -48,6 +48,7 @@ function AudioPost() {
         if (post.category.trim().length < 1) toast.error('Please select a category')
         if (post.title.trim().length < 1) toast.error('Please enter a title')
         if (post.content.trim().length < 5 || post.category.trim().length < 1 || post.title.trim().length < 1) return
+
         if (!hasAudio) {
             toast.error('Please record an audio')
             return
@@ -92,8 +93,8 @@ function AudioPost() {
                         <label htmlFor="">Title </label>
                         <input
                             onChange={(e) => {
-                                setCharacters({...characters, title: e.target.value.length})
-                                setPost({...post, title: e.target.value})
+                                setCharacters({ ...characters, title: e.target.value.length })
+                                setPost({ ...post, title: e.target.value })
                             }}
                             type="text" placeholder="Title" />
                         <span>{100 - characters.title} characters remaining</span>
@@ -102,8 +103,8 @@ function AudioPost() {
                         <label htmlFor="">Content*</label>
                         <textarea
                             onChange={(e) => {
-                                setCharacters({...characters, content: e.target.value.length})
-                                setPost({...post, content: e.target.value})
+                                setCharacters({ ...characters, content: e.target.value.length })
+                                setPost({ ...post, content: e.target.value })
                             }}
                             placeholder="Content" rows={10} />
 

@@ -8,6 +8,10 @@ import { apiRoute } from '../../utils/apiRoute.ts';
 import { IUserProfileData, IUserProfilePosts } from '../Profile/Profile.tsx';
 import moment from 'moment';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Features/store.ts';
+
+
 function UserPage() {
     const navigate = useNavigate();
     let { id } = useParams()
@@ -62,7 +66,7 @@ function UserPage() {
     async function giveCooldown(type: 'ban' | 'cooldown') {
         let x = confirm(`Are you sure you want to ${type} this user?`)
         if (!x) return
-        let a = await fetch(apiRoute + `/posts/coolDown/rsvgsng?action=${type}`, {
+        let a = await fetch(apiRoute + `/posts/coolDown/${id}?action=${type}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,8 +80,25 @@ function UserPage() {
         toast.success(b.message)
     }
 
+    async function removeCooldown() {
+        let x = confirm('Are you sure you want to remove/give cooldown?')
+        if (!x) return
+        let a = await fetch(apiRoute + `/posts/removeCoolDown/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        let b = await a.json()
+        if (b.error) {
+            return toast.error(b.message)
+        }
+        toast.success(b.msg)
+    }
 
 
+    const isUserAdmin = useSelector((state: RootState) => state.factory.userType)
 
     React.useEffect(() => {
         fetchProfilePageData().then(() => {
@@ -102,16 +123,31 @@ function UserPage() {
                 </div>
                 <p className={style.profile__name}>
                     {userProfileData.data.userName}
-                    <br />
-                    <br />
-                    <button
-                        onClick={() => giveCooldown('ban')}
-                    >{userProfileData.data.isUserBanned ? 'unban' : 'ban'} User?</button> <br /><br />
-                    <button
-                        onClick={() => giveCooldown('cooldown')}
-                    >Cooldown User?</button>
+
+                    {
+                        isUserAdmin === 'Admin' ?
+                            <React.Fragment>
+                                <br />
+                                <br />
+                                <button
+                                    onClick={() => giveCooldown('ban')}
+                                >{userProfileData.data.isUserBanned ? 'unban' : 'ban'} User?</button> <br /><br />
+                                <button
+                                    onClick={() => giveCooldown('cooldown')}
+                                >Cooldown User?</button>
+                                <br />
+                                <br />
+                                <button
+                                    onClick={() => removeCooldown()}
+                                >Remove Cooldown?</button>
+                            </React.Fragment> : null
+                    }
+
+
+
                 </p>
                 {
+
                     userProfileData.data.isUserBanned ?
                         <p className={style.cool__down__msg}>The user is permanently banned! </p> :
                         userProfileData?.data?.isUserCoolDown ? <p className={style.cool__down__msg}>This user received cool down for {Math.floor(userProfileData?.data?.isUserCoolDown / 60000)} minutes</p> : null
