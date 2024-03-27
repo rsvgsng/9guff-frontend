@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import style from './TextPost.module.css'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom'
@@ -42,7 +42,7 @@ function TextPost() {
 
     const dispatch = useDispatch<any>()
     const [loading, setLoading] = useState(false)
-    const [characters, setCharacters] = useState({title:0, content: 0})
+    const [characters, setCharacters] = useState({ title: 0, content: 0 })
     const navigate = useNavigate()
     const [post, setPost] = React.useState<{
         title: string,
@@ -111,8 +111,8 @@ function TextPost() {
                         <label htmlFor="">Title </label>
                         <input
                             onChange={(e) => {
-                                setPost({...post, title: e.target.value});
-                                setCharacters({...characters, title: e.target.value.length});
+                                setPost({ ...post, title: e.target.value });
+                                setCharacters({ ...characters, title: e.target.value.length });
                             }}
                             type="text" placeholder="Title" />
                         <span>{100 - characters.title} characters remaining</span>
@@ -141,6 +141,22 @@ function TextPost() {
                                 })
                             }
                         </select>
+
+                    </div>
+
+                    <div className={style.content__check__wrapper}>
+                        <label htmlFor="">Post options</label>
+
+                        <div className={style.content__check}>
+                            <input type="checkbox" name="" id="anon" />
+                            <label htmlFor="anon">Post anonymously</label>
+                        </div>
+
+                        <div className={style.content__check}>
+                            <input type="checkbox" name="" id="comment" />
+                            <label htmlFor="comment">Disable Comments</label>
+                        </div>
+
 
                     </div>
                     <div className={style.post__btn}>

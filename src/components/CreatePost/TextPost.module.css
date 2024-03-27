@@ -96,3 +96,28 @@
     cursor: pointer;
     width: 100%;
 }
+
+
+.content__check__wrapper {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+.content__check__wrapper input {
+    margin-right: 10px;
+    /* design */
+    border: 1px solid #d1d1d124;
+    display: flex;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.content__check {
+    font-size: 16px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+
+}

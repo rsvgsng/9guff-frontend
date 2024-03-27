@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Profile from './pages/Profile/Profile'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchNotifications, ping, setIsLoggedIn, setUserBanned, setUserName, setUserOnCooldown, setUserType } from './Features/mainSlice'
+import { fetchNotifications, fetchRecentUsers, ping, setIsLoggedIn, setUserBanned, setUserName, setUserOnCooldown, setUserType } from './Features/mainSlice'
 import LoginModelWarning from './components/Home/LoginModelWarning'
 import CreatePost from './pages/CreatePost/CreatePost'
 import { RootState } from './Features/store'
@@ -32,8 +32,13 @@ function App() {
         dispatch(setUserBanned(payload.data['userBan']))
         dispatch(setUserOnCooldown(payload.data['userCoolDown']))
         dispatch(setUserType(payload.data['userType']))
+        dispatch(fetchRecentUsers())
         dispatch(fetchNotifications())
         setLoading(false)
+        setInterval(() => {
+          dispatch(fetchRecentUsers())
+          dispatch(fetchNotifications())
+        }, 10000)
       } else {
         setLoading(false)
       }

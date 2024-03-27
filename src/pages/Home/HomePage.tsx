@@ -15,18 +15,21 @@ import { useNavigate } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { fetchRetry } from '../../utils/retryFetch'
 import { apiRoute } from '../../utils/apiRoute'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { addItem, setHasMore, setHomeItemsLoading, setPage } from '../../Features/mainSlice'
+import RecentActiveUsers from '../../components/Home/RecentActiveUsers'
 
 export interface IPostType {
     _id: string
     title: string
     photoUrl: any
+    commentCount: number
     audioUrl: any
     category: string
     postID: string
     isNSFW: boolean
     reactionCount: number
+    disableComments: boolean
     audioLength: string
     content: string
     user: string
@@ -45,6 +48,9 @@ function HomePage() {
     let loading = useSelector((e: RootState) => e.factory.homeItemsLoading);
     let isUserBanned = useSelector((e: RootState) => e.factory.isUserBanned);
     let isCooldown = useSelector((e: RootState) => e.factory.isUseronCooldown);
+
+
+
     async function fetchData() {
         if (hasMore === false) return
         if (page > 1) {
@@ -52,7 +58,6 @@ function HomePage() {
         } else {
             dispatch(setHomeItemsLoading(true))
         }
-        console.log(page)
         const response = await fetchRetry(`${apiRoute}/posts/feed?page=${page}&limit=${10}`, {
             method: 'GET',
             headers: {
@@ -113,10 +118,11 @@ function HomePage() {
                             </Action>
                         </Fab> : null
             }
+            <NavbarComp />
 
             <div className={style.home__wrapper}>
-                <NavbarComp />
                 <CategoryComp />
+                <RecentActiveUsers />
                 {
                     loading ?
                         Array(5).fill(0).map((_, i) => <PostCardSkeleton key={i} />)

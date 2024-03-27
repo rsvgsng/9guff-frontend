@@ -30,15 +30,26 @@ function CardCompText({ post }: { post: IPostType }) {
                     <div className={style.left__item}>
                         <div className={style.thumb__}>
                             <img src={apiRoute + '/storage/dp/' + post.user} />
-                        </div>
-                        <div className={style.name__user}>
-
-                            <div className={style.name__main}>
-                                <h4>{post.user}</h4>
-                            </div>
                             <div className={style.category__}>
                                 <span>{categoryFormatter(post.category)}</span>
                             </div>
+                        </div>
+                        <div className={style.name__user}>
+
+
+                            <div className={style.category__}>
+                                <span>{categoryFormatter(post.category)}</span>
+                            </div>
+
+
+                            <div className={style.name__main}>
+                                <h4>{post.user}</h4>
+
+                            </div>
+                            <div className={style.posted__on}>
+                                <span>{moment(post.createdAt).fromNow()}</span>
+                            </div>
+
                         </div>
                     </div>
                     <div className={style.right__item}>
@@ -84,8 +95,9 @@ function CardCompText({ post }: { post: IPostType }) {
                     </div>
                     <div className={style.right__bottom}>
                         <span>
-
-                            {moment(post.createdAt).fromNow()}
+                            {
+                                post.disableComments ? "Comments disabled" : post.commentCount > 0 ? post.commentCount + " comments" : "No comments"
+                            }
                         </span>
                     </div>
                 </div>
@@ -122,9 +134,14 @@ function CardCompAudio({ post }: { post: IPostType }) {
                         <div className={style.name__main}>
                             <h4>{post.user}</h4>
                         </div>
+                        <div className={style.posted__on}>
+                            <span>{moment(post.createdAt).fromNow()}</span>
+                        </div>
                         <div className={style.category__}>
                             <span>{categoryFormatter(post.category)}</span>
                         </div>
+
+
                     </div>
                 </div>
                 <div className={style.right__item}>
@@ -180,8 +197,9 @@ function CardCompAudio({ post }: { post: IPostType }) {
                 </div>
                 <div className={style.right__bottom}>
                     <span>
-                        {moment(post.createdAt).fromNow()}
-
+                        {
+                            post.disableComments ? "Comments disabled" : post.commentCount > 0 ? post.commentCount + " comments" : "No comments"
+                        }
                     </span>
                 </div>
             </div>
@@ -211,6 +229,9 @@ function CardCompImage({ post }: { post: IPostType }) {
 
                             <div className={style.name__main}>
                                 <h4>{post.user}</h4>
+                            </div>
+                            <div className={style.posted__on}>
+                                <span>{moment(post.createdAt).fromNow()}</span>
                             </div>
                             <div className={style.category__}>
                                 <span>{categoryFormatter(post.category)}</span>
@@ -261,7 +282,9 @@ function CardCompImage({ post }: { post: IPostType }) {
                     </div>
                     <div className={style.right__bottom}>
                         <span>
-                            {moment(post.createdAt).fromNow()}
+                            {
+                                post.disableComments ? "Comments disabled" : post.commentCount > 0 ? post.commentCount + " comments" : "No comments"
+                            }
                         </span>
                     </div>
                 </div>

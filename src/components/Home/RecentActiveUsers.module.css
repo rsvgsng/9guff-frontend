@@ -1,0 +1,65 @@
+.recent__users__wrapper {
+    margin-top: 15px;
+    border: 1px solid #c1c0c034;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.users__list {
+    display: flex;
+    padding-left: 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-right: 10px;
+}
+
+.active__item {
+    text-align: center;
+    width: 15%;
+    margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image__profile img {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.image__profile {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.user__name {
+    margin-top: 10px;
+}
+
+.recent__active {
+    position: absolute;
+    bottom: -5px;
+    border-radius: 5px;
+}
+
+.recent__active span {
+    font-size: 9px;
+    border-radius: 10px;
+    padding: 5px;
+    font-weight: 600;
+}
+
+.last__active span {
+    font-size: 10px;
+    color: #c1c0c0;
+    line-height: 1.5;
+}
+
+.user__name span {
+    font-weight: 500;
+    font-size: 13px;
+}

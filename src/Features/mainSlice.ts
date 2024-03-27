@@ -44,6 +44,18 @@ export const fetchCategoryData = createAsyncThunk("get/fetchCategoryData", async
     return data;
 })
 
+export const fetchRecentUsers = createAsyncThunk("get/fetchRecentUsers", async () => {
+    const response = await fetchRetry(`${apiRoute}/main/recentlyActiveUsers`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+    });
+    const data = await response.json();
+    return data;
+})
+
 
 export const mainSlice = createSlice({
     name: 'mainSlice',
@@ -63,6 +75,8 @@ export const mainSlice = createSlice({
         userType: '',
         isUserBanned: false,
         isUseronCooldown: false,
+
+        recentUsersActiveData: [],
 
 
     },
@@ -123,6 +137,10 @@ export const mainSlice = createSlice({
             })
             .addCase(fetchNotifications.rejected, (state) => {
                 state.notiLoading = false;
+            })
+
+            .addCase(fetchRecentUsers.fulfilled, (state, action) => {
+                state.recentUsersActiveData = action.payload;
             })
 
 

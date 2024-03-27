@@ -1,6 +1,12 @@
 .nav__main {
     margin-top: 15px;
     display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #242526;
+    position: sticky;
+    z-index: 9999999;
+    top: 0;
     justify-content: space-between;
     align-items: center;
 }
