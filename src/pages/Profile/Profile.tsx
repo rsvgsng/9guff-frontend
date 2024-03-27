@@ -276,7 +276,7 @@ function Profile() {
                     </div>
 
                     <p className={style.profile__name}>
-                        {userProfileData.data.userName === 'rsvgsng'}
+                        {userProfileData.data.userName}
                     </p>
                     {
                         userProfileData.data.bio ?
