@@ -364,7 +364,8 @@ function PostPage() {
     async function giveCooldown(type: 'ban' | 'cooldown') {
         let x = confirm(`Are you sure you want to ${type} this user?`)
         if (!x) return
-        let a = await fetch(apiRoute + `/posts/coolDown/${post?.data.user}?action=${type}`, {
+
+        let a = await fetch(apiRoute + `/posts/coolDown/${post?.data.isAnonymous ? (post.data.user).split(/\(|\)/)[1] : post?.data.user}?action=${type}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
