@@ -50,7 +50,7 @@ function RecentActiveUsers() {
                                     </div>
                                     <div className={style.user__name}>
                                         <span>
-                                            {e.username}
+                                            {e.username.length > 9 ? e.username.slice(0, 9) + '...' : e.username}
                                         </span>
                                     </div>
 
