@@ -27,6 +27,7 @@ export interface IPostType {
     audioUrl: any
     category: string
     postID: string
+    isAnonymous: boolean
     isNSFW: boolean
     reactionCount: number
     disableComments: boolean

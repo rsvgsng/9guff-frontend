@@ -21,11 +21,13 @@ function AudioPost() {
     const [post, setPost] = React.useState<{
         title: string,
         content: string,
-        category: string
+        category: string,
+        isAnonymous?: boolean,
     }>({
         title: '',
         content: '',
-        category: ''
+        category: '',
+        isAnonymous: false,
     })
 
 
@@ -58,6 +60,7 @@ function AudioPost() {
         formData.append('content', post.content)
         formData.append('category', post.category)
         formData.append('file', audio)
+        formData.append('isAnonymous', post.isAnonymous ? 'true' : 'false')
         setLoading(true)
         let res = await fetch(apiRoute + '/posts/newpost?posttype=audio', {
             method: 'POST',
@@ -172,7 +175,24 @@ function AudioPost() {
 
 
                     </div>
+                    <div className={style.content__check__wrapper}>
+                        <label htmlFor="">Post options</label>
 
+                        <div className={style.content__check}>
+                            <input
+                                onChange={(e) => setPost({ ...post, isAnonymous: e.target.checked })}
+                                type="checkbox" name="" id="anon" />
+                            <label htmlFor="anon">Post anonymously</label>
+                        </div>
+                        {/* 
+                        <div className={style.content__check}>
+                            <input
+                                type="checkbox" name="" id="comment" />
+                            <label htmlFor="comment">Disable Comments</label>
+                        </div> */}
+
+
+                    </div>
 
                     <div className={style.post__btn}>
                         <button

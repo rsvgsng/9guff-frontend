@@ -79,6 +79,8 @@ interface IPost {
     audioLength: any
     _id: string
     title: string
+    isAnonymous: boolean
+    disableComments: boolean
     photoUrl: any
     audioUrl: any
     category: string
@@ -438,7 +440,8 @@ function PostPage() {
                             <div className={style.upper__meta}>
                                 <div className={style.left__item}
                                     onClick={() => {
-                                        navigate('/u/' + post?.data.user)
+                                        post?.data.isAnonymous ? null :
+                                            navigate('/u/' + post?.data.user)
                                     }}>
                                     <div className={style.thumb__}>
                                         <img src={apiRoute + '/storage/dp/' + post?.data.user} />

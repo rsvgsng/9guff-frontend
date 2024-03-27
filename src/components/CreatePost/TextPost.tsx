@@ -47,11 +47,13 @@ function TextPost() {
     const [post, setPost] = React.useState<{
         title: string,
         content: string,
-        category: string
+        category: string,
+        isAnonymous?: boolean,
     }>({
         title: '',
         content: '',
-        category: ''
+        category: '',
+        isAnonymous: false,
     })
     async function postText() {
         if (loading) return
@@ -79,7 +81,8 @@ function TextPost() {
             body: JSON.stringify({
                 title: post.title,
                 content: post.content,
-                category: post.category
+                category: post.category,
+                isAnonymous: post.isAnonymous,
             })
         })
         const b = await a.json()
@@ -148,14 +151,17 @@ function TextPost() {
                         <label htmlFor="">Post options</label>
 
                         <div className={style.content__check}>
-                            <input type="checkbox" name="" id="anon" />
+                            <input
+                                onChange={(e) => setPost({ ...post, isAnonymous: e.target.checked })}
+                                type="checkbox" name="" id="anon" />
                             <label htmlFor="anon">Post anonymously</label>
                         </div>
-
+                        {/* 
                         <div className={style.content__check}>
-                            <input type="checkbox" name="" id="comment" />
+                            <input
+                                type="checkbox" name="" id="comment" />
                             <label htmlFor="comment">Disable Comments</label>
-                        </div>
+                        </div> */}
 
 
                     </div>

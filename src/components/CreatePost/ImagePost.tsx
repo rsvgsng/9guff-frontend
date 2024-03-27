@@ -18,7 +18,7 @@ function ImagePost() {
     const [category, setCategory] = React.useState<string>('')
     const [loading, setLoading] = useState(false)
     const [characters, setCharacters] = useState({ title: 0, content: 0 })
-
+    const [isAnonymous, setIsAnonymous] = useState<boolean>(false)
     async function handleUpload(e: any) {
         let imageReader = new FileReader()
         imageReader.readAsDataURL(e.target.files[0])
@@ -72,6 +72,7 @@ function ImagePost() {
         formData.append('content', content)
         formData.append('category', category)
         formData.append('file', file)
+        formData.append('isAnonymous', isAnonymous.toString())
         setLoading(true)
         let a = await fetchRetry(apiRoute + `/posts/newpost?posttype=image`, {
             method: 'POST',
@@ -159,6 +160,24 @@ function ImagePost() {
                             })
                         }
                     </select>
+
+                </div>
+                <div className={style.content__check__wrapper}>
+                    <label htmlFor="">Post options</label>
+
+                    <div className={style.content__check}>
+                        <input
+                            onChange={(e) => setIsAnonymous(e.target.checked)}
+                            type="checkbox" name="" id="anon" />
+                        <label htmlFor="anon">Post anonymously</label>
+                    </div>
+                    {/* 
+                        <div className={style.content__check}>
+                            <input
+                                type="checkbox" name="" id="comment" />
+                            <label htmlFor="comment">Disable Comments</label>
+                        </div> */}
+
 
                 </div>
                 <div className={style.post__btn}>

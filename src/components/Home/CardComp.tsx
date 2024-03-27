@@ -25,7 +25,12 @@ function CardCompText({ post }: { post: IPostType }) {
                         navigate('/c/' + post.postID) : dispatch(setWarning(true))
 
                 }}
-                className={style.card__comp__text}>
+                className={style.card__comp__text}
+                style={{
+                    background: post.isAnonymous ? '#181817' : "transparent"
+                }}
+
+            >
                 <div className={style.upper__meta}>
                     <div className={style.left__item}>
                         <div className={style.thumb__}>
@@ -43,7 +48,13 @@ function CardCompText({ post }: { post: IPostType }) {
 
 
                             <div className={style.name__main}>
-                                <h4>{post.user}</h4>
+                                <h4
+                                    style={{
+                                        color: post.isAnonymous ? '#03a9f4' : 'unset',
+                                        textTransform: post.isAnonymous ? 'uppercase' : 'unset'
+
+                                    }}
+                                >{post.user}</h4>
 
                             </div>
                             <div className={style.posted__on}>
@@ -120,7 +131,10 @@ function CardCompAudio({ post }: { post: IPostType }) {
 
             }}
             className={style.card__comp__text} style={{
-                background: post.isNSFW ? 'unset' : "#0a364b"
+                background:
+                    post.isAnonymous ? "rgb(24 24 23)" :
+                        post.isNSFW ? 'unset' : "#0a364b",
+
             }}>
 
             <div className={style.upper__meta}>
@@ -132,7 +146,14 @@ function CardCompAudio({ post }: { post: IPostType }) {
                     <div className={style.name__user}>
 
                         <div className={style.name__main}>
-                            <h4>{post.user}</h4>
+                            <h4
+                                style={{
+                                    color: post.isAnonymous ? '#03a9f4' : 'unset',
+                                    textTransform: post.isAnonymous ? 'uppercase' : 'unset',
+
+
+                                }}
+                            >{post.user}</h4>
                         </div>
                         <div className={style.posted__on}>
                             <span>{moment(post.createdAt).fromNow()}</span>
@@ -214,11 +235,15 @@ function CardCompImage({ post }: { post: IPostType }) {
     const navigate = useNavigate()
     return (
         <React.Fragment>
-            <div className={style.card__comp__text} onClick={() => {
-                isLogged ?
-                    navigate('/c/' + post.postID) : dispatch(setWarning(true))
+            <div className={style.card__comp__text}
+                style={{
+                    background: post.isAnonymous ? 'rgb(24, 24, 23)' : "transparent"
+                }}
+                onClick={() => {
+                    isLogged ?
+                        navigate('/c/' + post.postID) : dispatch(setWarning(true))
 
-            }}>
+                }}>
                 <div className={style.upper__meta}>
                     <div className={style.left__item}>
                         <div className={style.thumb__}>
@@ -228,7 +253,14 @@ function CardCompImage({ post }: { post: IPostType }) {
                         <div className={style.name__user}>
 
                             <div className={style.name__main}>
-                                <h4>{post.user}</h4>
+                                <h4
+                                    style={{
+                                        color: post.isAnonymous ? '#03a9f4' : 'unset',
+
+                                        textTransform: post.isAnonymous ? 'uppercase' : 'unset'
+                                    }}
+
+                                >{post.user}</h4>
                             </div>
                             <div className={style.posted__on}>
                                 <span>{moment(post.createdAt).fromNow()}</span>
