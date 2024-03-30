@@ -106,14 +106,17 @@ let htmlString = `
     style="
       height: 60px;
       width: 100%;
+      color:black;
       border: none;
       background-color: #F0F0F0;
       padding: 4px;
       margin: 2px 0px;
     "
     placeholder="Type Message"
+    id="itext"
   type="text" name="sub_message" value="" maxlength="255" onfocus="if(this.value == 'Message')this.value = '';"><br>
-  <button id="saybutton" onclick="set_cookie(); return clearMessageBox();">Send</button>	  
+
+  <button id="saybutton" onclick="set_cookie();  return clearMessageBox();">Send</button>	  
 
     <script>
    
@@ -121,8 +124,10 @@ let htmlString = `
 function clear_message2() { document.yellform.sub_message.value=""; document.yellform.sub_message.focus(); }
 
 function clearMessageBox() {
-document.yellform.submit();
-setTimeout("clear_message2()",200); return false;
+    document.yellform.submit();
+    document.yellform.sub_message.value=""
+    // setTimeout("clear_message2()",200);
+     return false;
 }
 
 function insertsmiley(smiley)
@@ -194,7 +199,7 @@ function App() {
         <div className={`popup_shoutbox ${showChat ? 'visible' : 'invisible'}`}>
           <div className={`container`}>
             <div className={`shoutbox__header`}>
-              <p>Live Chat</p>
+              <p>Live Chat (Temporarily avaliable)</p>
               <div onClick={() => {
                 dispatch(setShowChat(false))
               }}>
