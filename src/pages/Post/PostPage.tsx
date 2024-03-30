@@ -12,6 +12,7 @@ import { FaHeart, FaShare } from "react-icons/fa";
 import { MdRemoveRedEye } from 'react-icons/md';
 import { IoMdCloseCircle } from "react-icons/io";
 import { BsEmojiDizzyFill } from "react-icons/bs";
+import ReactPlayer from 'react-player'
 import { FaAngry } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { IconType } from 'react-icons';
@@ -85,6 +86,7 @@ interface IPost {
     audioUrl: any
     category: string
     postID: string
+    videoUrl: any
     isNSFW: boolean
     content: string
     user: string
@@ -488,10 +490,23 @@ function PostPage() {
                                     </div> : null
                                 }
                                 {
+                                    post?.data.videoUrl ? <div className={style.video__content}>
+                                        <ReactPlayer url={apiRoute + "/storage/" + post.data.videoUrl}
+                                            controls={true} width="100%" height="100%"
+                                            style={{
+                                                borderRadius: '10px'
+                                            }}
+                                        />
+
+                                    </div> : null
+                                }
+                                {
+
+                                }
+                                {
                                     post?.data.audioUrl ? (
                                         <div className={style.audio__content}>
                                             <H5AudioPlayer src={apiRoute + '/storage/' + post?.data.audioUrl} />
-
                                         </div>
                                     ) : null
                                 }

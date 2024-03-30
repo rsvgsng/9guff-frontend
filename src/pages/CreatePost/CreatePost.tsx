@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import TextPost from '../../components/CreatePost/TextPost'
 import ImagePost from '../../components/CreatePost/ImagePost'
 import AudioPost from '../../components/CreatePost/AudioPost'
+import VideoPost from '../../components/CreatePost/VideoPost'
 
 function CreatePost() {
 
@@ -10,7 +11,7 @@ function CreatePost() {
     let postType = param.id as string
     const [loading, setLoading] = React.useState<boolean>(true)
     React.useEffect(() => {
-        let posttypes: Array<string> = ['image', 'audio', 'text']
+        let posttypes: Array<string> = ['image', 'audio', 'text', 'video']
         if (!posttypes.includes(postType)) {
             window.location.href = '/'
         }
@@ -24,6 +25,9 @@ function CreatePost() {
     }
     if (postType === 'image') {
         return <ImagePost />
+    }
+    if (postType === 'video') {
+        return <VideoPost />
     }
     if (postType === 'audio') {
         return <AudioPost />

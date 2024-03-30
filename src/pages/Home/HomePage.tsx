@@ -1,7 +1,7 @@
 import style from './HomePage.module.css'
 import NavbarComp from "../../components/Home/NavbarComp"
 import CategoryComp from "../../components/Home/CategoryComp"
-import { CardCompAudio, CardCompImage, CardCompText } from "../../components/Home/CardComp"
+import { CardCompAudio, CardCompImage, CardCompText, CardCompVideo } from "../../components/Home/CardComp"
 import PostCardSkeleton from '../../components/Skeletons/PostCardSkeleton'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../Features/store'
@@ -9,7 +9,7 @@ import { Fab, Action } from 'react-tiny-fab';
 import 'react-tiny-fab/dist/styles.css';
 import { IoIosCreate } from "react-icons/io";
 import { MdOutlineTextFields } from "react-icons/md";
-import { FaImages } from "react-icons/fa";
+import { FaImages, FaVideo } from "react-icons/fa";
 import { AiTwotoneAudio } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -27,6 +27,7 @@ export interface IPostType {
     audioUrl: any
     category: string
     postID: string
+    videoUrl: any
     isAnonymous: boolean
     isNSFW: boolean
     reactionCount: number
@@ -117,7 +118,18 @@ function HomePage() {
                             >
                                 <AiTwotoneAudio />
                             </Action>
-                        </Fab> : null
+                            <Action
+                                text="Create Video Post"
+                                onClick={() => {
+                                    navigate("/cp/video")
+                                }}
+                            >
+                                <FaVideo />
+                            </Action>
+                        </Fab>
+
+
+                    : null
             }
             <NavbarComp />
 
@@ -146,7 +158,11 @@ function HomePage() {
                                             return <CardCompImage key={i} post={e} />
                                         } else if (e.audioUrl) {
                                             return <CardCompAudio key={i} post={e} />
-                                        } else {
+                                        } else if (e.videoUrl) {
+                                            return <CardCompVideo key={i} post={e} />
+                                        }
+
+                                        else {
                                             return <CardCompText key={i} post={e} />
                                         }
                                     })
