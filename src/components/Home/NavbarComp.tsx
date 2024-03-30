@@ -6,14 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { FaCircleUser } from "react-icons/fa6";
 import { RiLoginCircleFill } from "react-icons/ri";
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../Features/store';
+import { IoChatboxSharp, IoChatbubblesOutline } from 'react-icons/io5';
+import { BsChatSquareDots } from 'react-icons/bs';
+import { setShowChat } from '../../Features/mainSlice';
 function NavbarComp() {
     const navigate = useNavigate()
     const isLogged = useSelector((state: RootState) => state.factory.isLoggedIn)
     const notification: any = useSelector((state: RootState) => state?.factory?.notifications)
     let notiCount = notification?.data?.unseenNotiCount
-
+    const dispatch = useDispatch()
     return (
         <React.Fragment>
 
@@ -25,6 +28,9 @@ function NavbarComp() {
                     {
                         isLogged ?
                             <React.Fragment>
+                                <div className={style.noti__btn} onClick={() => dispatch(setShowChat(true))}>
+                                    <IoChatbubblesOutline />
+                                </div>
                                 <div className={style.noti__btn} onClick={() => navigate('/notifications')}>
                                     {
                                         notiCount > 0 ? <div className={style.badge__noti}>{notiCount}</div> : null
@@ -35,6 +41,7 @@ function NavbarComp() {
                                 <div className={style.noti__btn} onClick={() => navigate('/profile')}>
                                     <FaCircleUser />
                                 </div>
+
                             </React.Fragment>
                             :
                             <div className={style.login__btn} onClick={() => navigate('/auth/signup')}>

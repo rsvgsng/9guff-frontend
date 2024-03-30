@@ -12,18 +12,147 @@ import { CgSpinnerTwo } from "react-icons/cg";
 import 'react-loading-skeleton/dist/skeleton.css'
 import Profile from './pages/Profile/Profile'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchNotifications, fetchRecentUsers, ping, setIsLoggedIn, setUserBanned, setUserName, setUserOnCooldown, setUserType } from './Features/mainSlice'
+import { fetchNotifications, fetchRecentUsers, ping, setIsLoggedIn, setIsPremium, setShowChat, setUserBanned, setUserName, setUserOnCooldown, setUserType } from './Features/mainSlice'
 import LoginModelWarning from './components/Home/LoginModelWarning'
 import CreatePost from './pages/CreatePost/CreatePost'
 import { RootState } from './Features/store'
 import UserPage from './pages/User/User'
 import CategoryPage from './pages/Category/CategoryPage'
+import { Toaster } from 'react-hot-toast'
+import { AiOutlineClose } from 'react-icons/ai'
+
+
+let htmlString = `
+  <style type="text/css">
+ #yellbox { width: 100%; height: 100%; text-align: center; }
+ #yellbox iframe { width: 100%; height: 90%; min-height: 200px; border: 1px solid #6297BC; margin: 0px; border-radius: 4px; padding: 10px 0px; }
+ #yellbox button { height: 25px; }
+ #saybutton { width: 100%;height:50px;margin-top:10px; padding: 5px; background-color: #6297BC; color: white; border: none; border-radius: 4px; cursor: pointer; }
+ 
+  input[type=text] {
+  border: none; /*1px solid #6297BC;*/
+  border-radius: 4px;
+  background-color: #F0F0F0;
+  padding: 4px;
+  margin: 2px 0px;
+  box-sizing: border-box;
+  width: 100%;
+ }
+
+
+
+ /* Popup container */
+ .emoji-window {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  /* The actual popup (appears on top) */
+  .emoji-window .emoji-window-content {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  
+  /* Popup arrow */
+  .emoji-window .emoji-window-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  /* Toggle this class when clicking on the popup container (hide and show the popup) */
+  .emoji-window .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+  }
+  
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  } 
+</style>
+
+  <iframe id="ybframe" name="ybframe" frameborder="0" allowtransparency="true" height="449px" src="https://yellbox.com/yellbox.php?name=kamal"></iframe>
+
+  <form 
+  action="https://yellbox.com/addmessage.php" method="post" target="ybframe" name="yellform" style="margin: 1px;" accept-charset="UTF-8"> 
+  <input type="hidden" name="sub_username" value="kamal">
+  <input style="display:none" type="text" name="sub_name" value="Anonymous" maxlength="15" onfocus="if(this.value == \'Name\')this.value = \'\';">
+ 
+  <input
+    style="
+      height: 60px;
+      width: 100%;
+      border: none;
+      background-color: #F0F0F0;
+      padding: 4px;
+      margin: 2px 0px;
+    "
+    placeholder="Type Message"
+  type="text" name="sub_message" value="" maxlength="255" onfocus="if(this.value == 'Message')this.value = '';"><br>
+  <button id="saybutton" onclick="set_cookie(); return clearMessageBox();">Send</button>	  
+
+    <script>
+   
+
+function clear_message2() { document.yellform.sub_message.value=""; document.yellform.sub_message.focus(); }
+
+function clearMessageBox() {
+document.yellform.submit();
+setTimeout("clear_message2()",200); return false;
+}
+
+function insertsmiley(smiley)
+{
+    if(document.yellform.sub_message.value == "Message") document.yellform.sub_message.value = " "+smiley+" ";
+    else document.yellform.sub_message.value += " "+smiley+" ";
+}
+function reloadIframe() {
+  var iframe = document.getElementById('ybframe');
+  iframe.src = iframe.src; // Reload the iframe by setting its src attribute again
+}
+setInterval(reloadIframe, 4000);
+
+</script>
+
+
+
+</form>
+
+  `
+
+
 function App() {
   let dispatch = useDispatch<any>()
   const [loading, setLoading] = React.useState(true)
   let isLogged = useSelector((e: RootState) => e.factory.isLoggedIn)
   let isUserBanned = useSelector((state: RootState) => state.factory.isUserBanned)
+
   let isUserCooldown: any = useSelector((state: RootState) => state.factory.isUseronCooldown)
+  let showChat = useSelector((state: RootState) => state.factory.showChat)
   React.useEffect(() => {
     dispatch(ping()).then((res: any) => {
       let payload = res.payload
@@ -31,6 +160,7 @@ function App() {
         dispatch(setUserName(payload.data['id']))
         dispatch(setIsLoggedIn(true))
         dispatch(setUserBanned(payload.data['userBan']))
+        dispatch(setIsPremium(payload.data['userPremium']))
         dispatch(setUserOnCooldown(payload.data['userCoolDown']))
         dispatch(setUserType(payload.data['userType']))
         dispatch(fetchRecentUsers())
@@ -39,7 +169,7 @@ function App() {
         setInterval(() => {
           dispatch(fetchRecentUsers())
           dispatch(fetchNotifications())
-        }, 10000)
+        }, 40000)
       } else {
         setLoading(false)
       }
@@ -60,6 +190,23 @@ function App() {
     return (
       <React.Fragment>
 
+        <Toaster />
+        <div className={`popup_shoutbox ${showChat ? 'visible' : 'invisible'}`}>
+          <div className={`container`}>
+            <div className={`shoutbox__header`}>
+              <p>Live Chat</p>
+              <div onClick={() => {
+                dispatch(setShowChat(false))
+              }}>
+                <AiOutlineClose size={`1.3em`} />
+              </div>
+
+            </div>
+            <div className="shoutbox__iframe"
+              dangerouslySetInnerHTML={{ __html: htmlString }}
+            />
+          </div>
+        </div>
         {
           isUserBanned ? <div className='notice____'>You are banned from using this platform</div> :
             isUserCooldown ? <div className='notice____'>You are on cooldown, you can't post or comment for the {
@@ -70,6 +217,8 @@ function App() {
         <div className="versioning">
           <span>Confess24 (Beta)</span>
         </div>
+        <Toaster />
+
         <div className={`container`}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -91,6 +240,8 @@ function App() {
   return (
     <React.Fragment>
       <LoginModelWarning />
+      <Toaster />
+
       <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />

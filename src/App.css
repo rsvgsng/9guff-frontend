@@ -83,3 +83,37 @@ textarea {
     color: #fcfcfc;
     margin-left: 10px;
 }
+
+
+
+.popup_shoutbox {
+    background-color: #242526;
+    position: fixed;
+    inset: 0;
+    z-index: 9999999999999;
+    transition: all 0.5s ease-in-out;
+    padding: 0px 5px;
+}
+
+.invisible {
+    left: 120%;
+}
+
+.visible {
+    left: 0;
+}
+
+
+
+
+.shoutbox__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+}
+
+.shoutbox__iframe iframe {
+    width: 100%;
+    border: none;
+}

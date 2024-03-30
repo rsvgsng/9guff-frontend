@@ -73,10 +73,13 @@ export const mainSlice = createSlice({
         categoryData: [] as any,
 
         userType: '',
+        isPremium: undefined,
         isUserBanned: false,
         isUseronCooldown: false,
 
         recentUsersActiveData: [],
+
+        showChat: false
 
 
     },
@@ -90,13 +93,18 @@ export const mainSlice = createSlice({
         setIsLoggedIn: (state, action) => {
             state.isLoggedIn = action.payload;
         },
-
+        setIsPremium: (state, action) => {
+            state.isPremium = action.payload;
+        },
         setUserType: (state, action) => {
             state.userType = action.payload;
         },
 
         setUserName: (state, action) => {
             state.userName = action.payload;
+        },
+        setShowChat: (state, action) => {
+            state.showChat = action.payload;
         },
         setUserOnCooldown: (state, action) => {
             state.isUseronCooldown = action.payload;
@@ -113,7 +121,6 @@ export const mainSlice = createSlice({
         setPage: (state, action) => {
             state.page = action.payload;
         },
-
         setHomeItemsLoading: (state, action) => {
             state.homeItemsLoading = action.payload;
         },
@@ -150,5 +157,6 @@ export const mainSlice = createSlice({
 export const { getNotifications,
     setUserBanned,
     setUserOnCooldown,
-    setUserType, setCategoryData, setHomeItemsLoading, setPage, addItem, setHasMore, setUserName, setIsLoggedIn, setWarning } = mainSlice.actions;
+    setShowChat,
+    setUserType, setCategoryData, setIsPremium, setHomeItemsLoading, setPage, addItem, setHasMore, setUserName, setIsLoggedIn, setWarning } = mainSlice.actions;
 export default mainSlice.reducer;

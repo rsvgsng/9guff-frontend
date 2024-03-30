@@ -7,7 +7,7 @@ import { BiVideoPlus } from 'react-icons/bi'
 import { IoCloseCircle, IoCloseCircleSharp } from 'react-icons/io5'
 import { fetchRetry } from '../../utils/retryFetch'
 import { apiRoute } from '../../utils/apiRoute'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 function VideoPost() {
     const navigate = useNavigate()
     const [title, setTitle] = React.useState<string>('')
@@ -68,8 +68,8 @@ function VideoPost() {
         })
         let b = await a.json()
         if (b.error) {
-            toast.error(b.message)
             setLoading(false)
+            toast.error(b.message)
             return
         }
         setLoading(false)

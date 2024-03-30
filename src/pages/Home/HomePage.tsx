@@ -18,7 +18,6 @@ import { apiRoute } from '../../utils/apiRoute'
 import React, { useEffect } from 'react'
 import { addItem, setHasMore, setHomeItemsLoading, setPage } from '../../Features/mainSlice'
 import RecentActiveUsers from '../../components/Home/RecentActiveUsers'
-
 export interface IPostType {
     _id: string
     title: string
@@ -50,8 +49,7 @@ function HomePage() {
     let loading = useSelector((e: RootState) => e.factory.homeItemsLoading);
     let isUserBanned = useSelector((e: RootState) => e.factory.isUserBanned);
     let isCooldown = useSelector((e: RootState) => e.factory.isUseronCooldown);
-
-
+    let isUserPremium = useSelector((e: RootState) => e?.factory?.isPremium)
 
     async function fetchData() {
         if (hasMore === false) return
@@ -118,10 +116,13 @@ function HomePage() {
                             >
                                 <AiTwotoneAudio />
                             </Action>
+
                             <Action
+
                                 text="Create Video Post"
                                 onClick={() => {
-                                    navigate("/cp/video")
+                                    isUserPremium ?
+                                        navigate("/cp/video") : alert("This feature is not avaliable for you yet. You will receive it soon :)")
                                 }}
                             >
                                 <FaVideo />
