@@ -12,7 +12,6 @@ import { FaHeart, FaShare } from "react-icons/fa";
 import { MdRemoveRedEye } from 'react-icons/md';
 import { IoMdCloseCircle } from "react-icons/io";
 import { BsEmojiDizzyFill } from "react-icons/bs";
-import ReactPlayer from 'react-player'
 import { FaAngry } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { IconType } from 'react-icons';
@@ -491,7 +490,7 @@ function PostPage() {
                                 }
                                 {
                                     post?.data.videoUrl ? <div className={style.video__content}>
-                                        <ReactPlayer url={apiRoute + "/storage/" + post.data.videoUrl}
+                                        <video src={apiRoute + "/storage/" + post?.data.videoUrl}
                                             controls={true} width="100%" height="100%"
                                             style={{
                                                 borderRadius: '10px'

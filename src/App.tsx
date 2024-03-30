@@ -29,17 +29,6 @@ let htmlString = `
  #yellbox button { height: 25px; }
  #saybutton { width: 100%;height:50px;margin-top:10px; padding: 5px; background-color: #6297BC; color: white; border: none; border-radius: 4px; cursor: pointer; }
  
-  input[type=text] {
-  border: none; /*1px solid #6297BC;*/
-  border-radius: 4px;
-  background-color: #F0F0F0;
-  padding: 4px;
-  margin: 2px 0px;
-  box-sizing: border-box;
-  width: 100%;
- }
-
-
 
  /* Popup container */
  .emoji-window {
@@ -82,17 +71,7 @@ let htmlString = `
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s
   }
-  
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  } 
+
 </style>
 
   <iframe id="ybframe" name="ybframe" frameborder="0" allowtransparency="true" height="449px" src="https://yellbox.com/yellbox.php?name=kamal"></iframe>
@@ -199,7 +178,7 @@ function App() {
         <div className={`popup_shoutbox ${showChat ? 'visible' : 'invisible'}`}>
           <div className={`container`}>
             <div className={`shoutbox__header`}>
-              <p>Live Chat (Temporarily avaliable)</p>
+              <p>Live Chat (Not realtime...Will be fixing soon)</p>
               <div onClick={() => {
                 dispatch(setShowChat(false))
               }}>
