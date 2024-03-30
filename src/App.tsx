@@ -6,7 +6,9 @@ import Login from './pages/Login/Login'
 import Signup from './pages/Signup/Signup'
 import Notifications from './pages/Notifications/Notifications'
 import React from 'react'
-import { Toaster } from 'react-hot-toast'
+
+import { CgSpinnerTwo } from "react-icons/cg";
+
 import 'react-loading-skeleton/dist/skeleton.css'
 import Profile from './pages/Profile/Profile'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +24,6 @@ function App() {
   let isLogged = useSelector((e: RootState) => e.factory.isLoggedIn)
   let isUserBanned = useSelector((state: RootState) => state.factory.isUserBanned)
   let isUserCooldown: any = useSelector((state: RootState) => state.factory.isUseronCooldown)
-  const path = window.location.pathname
   React.useEffect(() => {
     dispatch(ping()).then((res: any) => {
       let payload = res.payload
@@ -45,11 +46,20 @@ function App() {
     }
     )
   }, [])
-  if (loading) return ''
+  if (loading) return (
+    // hot toast loading spinner
+    <div className="auth__spinner">
+      <CgSpinnerTwo className="spinner" />
+      <span>
+        Authenticating Session... Hold on
+      </span>
+    </div>
+  )
 
   if (isLogged) {
     return (
       <React.Fragment>
+
         {
           isUserBanned ? <div className='notice____'>You are banned from using this platform</div> :
             isUserCooldown ? <div className='notice____'>You are on cooldown, you can't post or comment for the {
@@ -60,7 +70,6 @@ function App() {
         <div className="versioning">
           <span>Confess24 (Beta)</span>
         </div>
-        <Toaster />
         <div className={`container`}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -82,8 +91,6 @@ function App() {
   return (
     <React.Fragment>
       <LoginModelWarning />
-      <Toaster />
-
       <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />

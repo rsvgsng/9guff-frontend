@@ -12,7 +12,7 @@ function NavbarComp() {
     const navigate = useNavigate()
     const isLogged = useSelector((state: RootState) => state.factory.isLoggedIn)
     const notification: any = useSelector((state: RootState) => state?.factory?.notifications)
-    let notiCount = notification?.data?.filter((e: any) => e.isSeen == false).length
+    let notiCount = notification?.data?.unseenNotiCount
 
     return (
         <React.Fragment>

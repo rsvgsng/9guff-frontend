@@ -565,7 +565,6 @@ function PostPage() {
                                 return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                             })
                             .map((e, i) => {
-                                console.log(e)
                                 return (
                                     <React.Fragment key={i}>
                                         <div className={style.Comment__item}>

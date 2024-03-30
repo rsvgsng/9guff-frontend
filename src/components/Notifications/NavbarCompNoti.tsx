@@ -14,13 +14,13 @@ function NavbarCompNoti() {
           </div>
           <div className={style.noti__text}>
             <h3>Notifications </h3>
-            <small>contains bugs</small>
           </div>
         </div>
         <div className={style.right__item}>
           {/* <span>Mark all as read</span> */}
         </div>
       </div>
+
     </React.Fragment>
   )
 }

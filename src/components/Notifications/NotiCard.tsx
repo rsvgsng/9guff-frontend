@@ -9,17 +9,26 @@ import toast from 'react-hot-toast'
 
 
 interface NotiCardProps {
-    type: string
-    message: string
-    postID: string
-    time: string
-    isSeen: boolean
     _id: string
+    NotificationType: string
+    owner: string
+    postID: string
+    actionBy: ActionBy[]
+    isSeen: boolean
+    __v: number
 }
+
+
+export interface ActionBy {
+    user: string
+    action: string
+    _id: string
+    actionAt: string
+}
+
 
 function NotiCommentCard({ noti }: { noti: NotiCardProps }): React.JSX.Element {
     const dispatch = useDispatch<any>()
-
 
     async function markAsRead(id: string, isSeen: boolean) {
         if (isSeen) {
@@ -54,17 +63,17 @@ function NotiCommentCard({ noti }: { noti: NotiCardProps }): React.JSX.Element {
                 }}>
                 <div className={style.top__content}>
                     <div className={style.avatar__main}>
-                        <img src={apiRoute + "/storage/dp/" + noti.message.split(" ")[0]} alt="" />
+                        <img src={apiRoute + "/storage/dp/" + noti.actionBy[0].user} alt="" />
                     </div>
                     <div className={style.right__main__content}>
                         <span>
-                            {noti.message}
+                            <strong>{noti.actionBy[0].user}</strong> {noti.actionBy[0].action} on your post
                         </span>
                     </div>
                 </div>
                 <div className={style.noti__meta}>
                     <span>
-                        {moment(noti.time).fromNow()}
+                        {moment(noti.actionBy[0].actionAt).fromNow()}
                     </span>
                 </div>
 

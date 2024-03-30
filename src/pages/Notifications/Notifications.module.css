@@ -6,3 +6,36 @@
 .noti__wrapper {
     margin-top: 20px;
 }
+
+.tab__item h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.tabs__reaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e0e0e02b;
+    padding: 4px;
+    background: #212121;
+    border-radius: 14px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+.tab__item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 9px;
+    border: 1px solid #e0e0e02b;
+
+
+}
+
+.tab__item svg {
+    margin-left: 10px;
+    font-size: 15px;
+}
