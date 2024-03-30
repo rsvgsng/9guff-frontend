@@ -300,7 +300,7 @@ function Terms() {
         <h2>9. Changes to Terms</h2>
         <p>Confess24 reserves the right to update or modify these terms and conditions at any time without prior notice. It is your responsibility to review these terms periodically for any changes. Your continued use of Confess24 after any modifications indicates your acceptance of the updated terms.</p>
 
-        <p>By using Confess24, you agree to comply with these terms and conditions. If you have any questions or concerns regarding these terms, please contact us at [Contact Information].</p>
+        <p>By using Confess24, you agree to comply with these terms and conditions.</p>
 
         <p>Last updated: Sun 17 March 2024</p>
       </div>
